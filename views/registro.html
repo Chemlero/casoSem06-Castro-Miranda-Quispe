@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Visita</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Registrar Visita</h1>
+        <form id="formRegistro">
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
+            <input type="text" id="dni" placeholder="DNI" required>
+            <input type="text" id="persona_visitada" placeholder="Persona visitada" required>
+            <select id="despacho" required>
+                <option value="">Seleccione un despacho</option>
+                <!-- Los despachos se cargarán dinámicamente con JS -->
+            </select>
+            <button type="submit">Registrar Entrada</button>
+        </form>
+    </div>
+    <script src="/js/main.js"></script>
+    <script>
+        // Cargar despachos al iniciar
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await fetch('/api/despachos');
+            const despachos = await response.json();
+            const select = document.getElementById('despacho');
+            despachos.forEach(despacho => {
+                const option = document.createElement('option');
+                option.value = despacho.id_despacho;
+                option.textContent = despacho.nombre_despacho;
+                select.appendChild(option);
+            });
+
+            // Manejar el envío del formulario
+            document.getElementById('formRegistro').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const visita = {
+                    nombre: document.getElementById('nombre').value,
+                    dni: document.getElementById('dni').value,
+                    persona_visitada: document.getElementById('persona_visitada').value,
+                    despacho: document.getElementById('despacho').value
+                };
+                const response = await fetch('/api/registro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(visita)
+                });
+                if (response.ok) {
+                    window.location.href = '/consultas.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
