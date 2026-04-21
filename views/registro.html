@@ -2,56 +2,47 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Visita</title>
+    <title>Registro de Visita</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Registrar Visita</h1>
+    <div id="sidebar"></div>
+    <div class="main">
+        <h2>Registro de Visita</h2>
         <form id="formRegistro">
-            <input type="text" id="nombre" placeholder="Nombre completo" required>
-            <input type="text" id="dni" placeholder="DNI" required>
-            <input type="text" id="persona_visitada" placeholder="Persona visitada" required>
-            <select id="despacho" required>
-                <option value="">Seleccione un despacho</option>
-                <!-- Los despachos se cargarán dinámicamente con JS -->
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" required>
+
+            <label>DNI</label>
+            <input type="text" name="dni" required>
+
+            <label>Tipo</label>
+            <select name="tipo" required>
+                <option value="visitante">Visitante</option>
+                <option value="funcionario">Funcionario</option>
             </select>
-            <button type="submit">Registrar Entrada</button>
+
+            <label>Despacho</label>
+            <select name="despacho" id="despacho" required>
+                <option value="">Seleccionar despacho</option>
+            </select>
+
+            <label>Persona visitada</label>
+            <input type="text" name="persona_visitada" required>
+
+            <label>Fecha</label>
+            <input type="date" name="fecha" required>
+
+            <label>Hora de entrada</label>
+            <input type="time" name="hora_entrada" required>
+
+            <label>Hora de salida</label>
+            <input type="time" name="hora_salida">
+
+            <button type="submit">Registrar Visita</button>
         </form>
     </div>
+    <script src="/js/sidebar.js"></script>
     <script src="/js/main.js"></script>
-    <script>
-        // Cargar despachos al iniciar
-        document.addEventListener('DOMContentLoaded', async () => {
-            const response = await fetch('/api/despachos');
-            const despachos = await response.json();
-            const select = document.getElementById('despacho');
-            despachos.forEach(despacho => {
-                const option = document.createElement('option');
-                option.value = despacho.id_despacho;
-                option.textContent = despacho.nombre_despacho;
-                select.appendChild(option);
-            });
-
-            // Manejar el envío del formulario
-            document.getElementById('formRegistro').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const visita = {
-                    nombre: document.getElementById('nombre').value,
-                    dni: document.getElementById('dni').value,
-                    persona_visitada: document.getElementById('persona_visitada').value,
-                    despacho: document.getElementById('despacho').value
-                };
-                const response = await fetch('/api/registro', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(visita)
-                });
-                if (response.ok) {
-                    window.location.href = '/consultas.html';
-                }
-            });
-        });
-    </script>
 </body>
 </html>

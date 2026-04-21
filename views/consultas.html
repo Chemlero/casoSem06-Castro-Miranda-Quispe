@@ -2,31 +2,49 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Consultar Visitas</title>
+    <title>Consultas</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Consultar Visitas</h1>
-        <table id="visitasTable">
+    <div id="sidebar"></div>
+    <div class="main">
+        <h2>Consultas de Visitas</h2>
+
+        <h3>Filtros</h3>
+        <div class="filtros">
+            <div>
+                <label>Fecha</label>
+                <input type="date" id="filtroFecha">
+            </div>
+            <div>
+                <label>Visitante</label>
+                <input type="text" id="filtroVisitante">
+            </div>
+            <div>
+                <label>Despacho</label>
+                <input type="text" id="filtroDespacho">
+            </div>
+            <button id="btnBuscar">Buscar</button>
+        </div>
+
+        <table border="1">
             <thead>
                 <tr>
                     <th>Visitante</th>
                     <th>DNI</th>
                     <th>Despacho</th>
-                    <th>Persona Visitada</th>
+                    <th>Visitado</th>
                     <th>Fecha</th>
-                    <th>Hora Entrada</th>
-                    <th>Hora Salida</th>
-                    <th>Tiempo Permanencia</th>
+                    <th>Entrada</th>
+                    <th>Salida</th>
+                    <th>Tiempo</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Las visitas se cargarán dinámicamente con JS -->
-            </tbody>
+            <tbody id="tablaResultados"></tbody>
         </table>
     </div>
+    <script src="/js/sidebar.js"></script>
     <script src="/js/main.js"></script>
 </body>
 </html>
