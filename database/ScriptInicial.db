@@ -1,0 +1,104 @@
+-- 1. Crear la base de datos
+CREATE DATABASE IF NOT EXISTS sistema_visitantes;
+USE sistema_visitantes;
+
+-- 2. Tabla `persona` (visitantes y funcionarios)
+CREATE TABLE IF NOT EXISTS persona (
+    id_persona INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_completo VARCHAR(100) NOT NULL,
+    dni VARCHAR(15) NOT NULL UNIQUE,
+    tipo ENUM('visitante', 'funcionario') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_dni (dni)
+) ENGINE=InnoDB;
+
+-- 3. Tabla `despacho` (despachos de la institución)
+CREATE TABLE IF NOT EXISTS despacho (
+    id_despacho INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_despacho VARCHAR(50) NOT NULL UNIQUE,
+    descripcion TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_nombre_despacho (nombre_despacho)
+) ENGINE=InnoDB;
+
+-- 4. Tabla `visita` (registro de visitas)
+CREATE TABLE IF NOT EXISTS visita (
+    id_visita INT AUTO_INCREMENT PRIMARY KEY,
+    id_persona INT NOT NULL,
+    id_despacho INT NOT NULL,
+    persona_visitada VARCHAR(100) NOT NULL,
+    fecha DATE NOT NULL,
+    hora_entrada TIME NOT NULL,
+    hora_salida TIME,
+    tiempo_permanencia TIME GENERATED ALWAYS AS (TIMEDIFF(hora_salida, hora_entrada)) STORED,
+    FOREIGN KEY (id_persona) REFERENCES persona(id_persona) ON DELETE RESTRICT,
+    FOREIGN KEY (id_despacho) REFERENCES despacho(id_despacho) ON DELETE RESTRICT,
+    INDEX idx_fecha (fecha),
+    INDEX idx_id_persona (id_persona),
+    INDEX idx_id_despacho (id_despacho)
+) ENGINE=InnoDB;
+
+-- 5. Tabla `usuarios` (sin hasheo de contraseñas)
+CREATE TABLE IF NOT EXISTS usuarios (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_usuario VARCHAR(50) NOT NULL UNIQUE,
+    contrasena VARCHAR(50) NOT NULL,  -- Contraseña en texto plano (solo para desarrollo)
+    rol ENUM('administrador', 'operador') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- 6. Datos iniciales para pruebas
+-- 6.1 Personas (visitantes y funcionarios)
+INSERT INTO persona (nombre_completo, dni, tipo) VALUES
+('Juan Pérez', '12345678', 'visitante'),
+('Ana López', '87654321', 'funcionario'),
+('Carlos Ramírez', '11223344', 'visitante'),
+('María Gómez', '44332211', 'funcionario'),
+('Pedro Sánchez', '55667788', 'visitante'),
+('Laura Martínez', '99887766', 'funcionario');
+
+-- 6.2 Despachos
+INSERT INTO despacho (nombre_despacho, descripcion) VALUES
+('Fiscalía 1', 'Despacho principal de fiscalía'),
+('Oficina de Recursos Humanos', 'Área de RRHH'),
+('Dirección General', 'Oficina del director general'),
+('Sala de Reuniones', 'Sala para reuniones generales'),
+('Oficina de Contabilidad', 'Área de contabilidad');
+
+-- 6.3 Visitas de ejemplo
+INSERT INTO visita (id_persona, id_despacho, persona_visitada, fecha, hora_entrada, hora_salida) VALUES
+(1, 1, 'Ana López', '2026-04-20', '09:00:00', '10:15:00'),  -- Juan Pérez visita a Ana López
+(3, 2, 'María Gómez', '2026-04-20', '11:30:00', '12:45:00'), -- Carlos Ramírez visita a María Gómez
+(5, 3, 'Laura Martínez', '2026-04-21', '14:00:00', '15:30:00'), -- Pedro Sánchez visita a Laura Martínez
+(1, 4, 'María Gómez', '2026-04-22', '10:00:00', NULL); -- Juan Pérez visita a María Gómez (sin salida registrada)
+
+-- 6.4 Usuarios (contraseñas en texto plano)
+INSERT INTO usuarios (nombre_usuario, contrasena, rol) VALUES
+('admin', 'admin123', 'administrador'),
+('operador1', 'operador123', 'operador');
+
+-- 7. Procedimiento almacenado para registrar salida
+DELIMITER //
+CREATE PROCEDURE registrar_salida(IN visita_id INT)
+BEGIN
+    UPDATE visita
+    SET hora_salida = CURRENT_TIME()
+    WHERE id_visita = visita_id;
+END //
+DELIMITER ;
+
+-- 8. Vista para reportes
+CREATE VIEW reporte_visitas AS
+SELECT
+    v.id_visita,
+    p.nombre_completo AS visitante,
+    p.dni,
+    d.nombre_despacho,
+    v.persona_visitada,
+    v.fecha,
+    v.hora_entrada,
+    v.hora_salida,
+    v.tiempo_permanencia
+FROM visita v
+JOIN persona p ON v.id_persona = p.id_persona
+JOIN despacho d ON v.id_despacho = d.id_despacho;

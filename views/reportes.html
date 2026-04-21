@@ -2,57 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Generar Reportes</title>
+    <title>Reportes</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Generar Reportes</h1>
-        <div class="reportes">
-            <div class="reporte">
-                <h2>Visitas por Despacho</h2>
-                <table id="visitasPorDespacho">
-                    <thead>
-                        <tr>
-                            <th>Despacho</th>
-                            <th>Total Visitas</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Datos se cargarán con JS -->
-                    </tbody>
-                </table>
-            </div>
-            <div class="reporte">
-                <h2>Tiempo Promedio de Permanencia</h2>
-                <p id="tiempoPromedio">Cargando...</p>
-            </div>
-        </div>
-    </div>
-    <script src="/js/main.js"></script>
-    <script>
-        // Cargar reportes al iniciar
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Visitas por despacho
-            const response = await fetch('/api/visitas-por-despacho');
-            const visitasPorDespacho = await response.json();
-            const tableBody = document.querySelector('#visitasPorDespacho tbody');
-            tableBody.innerHTML = '';
-            visitasPorDespacho.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.nombre_despacho}</td>
-                    <td>${item.total_visitas}</td>
-                `;
-                tableBody.appendChild(row);
-            });
+    <div id="sidebar"></div>
+    <div class="main">
+        <h2>Reportes</h2>
 
-            // Tiempo promedio de permanencia
-            const tiempoResponse = await fetch('/api/tiempo-promedio');
-            const tiempoPromedio = await tiempoResponse.json();
-            document.getElementById('tiempoPromedio').textContent =
-                `Tiempo promedio: ${tiempoPromedio.promedio_horas.toFixed(2)} horas`;
-        });
-    </script>
+        <h3>Exportación</h3>
+        <div>
+            <a href="/api/export/excel" class="button">Exportar a Excel</a>
+            <a href="/api/export/csv" class="button">Exportar a CSV</a>
+        </div>
+
+        <h3>Visitas por día</h3>
+        <div>
+            <input type="date" id="fechaReporte">
+            <button id="btnReporteDia">Generar</button>
+        </div>
+        <div id="reporteDia"></div>
+
+        <h3>Visitas por despacho</h3>
+        <div>
+            <input type="text" id="despachoReporte" placeholder="Nombre despacho">
+            <button id="btnReporteDespacho">Generar</button>
+        </div>
+        <div id="reporteDespacho"></div>
+
+        <h3>Tiempo promedio de permanencia</h3>
+        <div id="tiempoPromedio"></div>
+    </div>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>
