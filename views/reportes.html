@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generar Reportes</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Generar Reportes</h1>
+        <div class="reportes">
+            <div class="reporte">
+                <h2>Visitas por Despacho</h2>
+                <table id="visitasPorDespacho">
+                    <thead>
+                        <tr>
+                            <th>Despacho</th>
+                            <th>Total Visitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Datos se cargarán con JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="reporte">
+                <h2>Tiempo Promedio de Permanencia</h2>
+                <p id="tiempoPromedio">Cargando...</p>
+            </div>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+    <script>
+        // Cargar reportes al iniciar
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Visitas por despacho
+            const response = await fetch('/api/visitas-por-despacho');
+            const visitasPorDespacho = await response.json();
+            const tableBody = document.querySelector('#visitasPorDespacho tbody');
+            tableBody.innerHTML = '';
+            visitasPorDespacho.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.nombre_despacho}</td>
+                    <td>${item.total_visitas}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Tiempo promedio de permanencia
+            const tiempoResponse = await fetch('/api/tiempo-promedio');
+            const tiempoPromedio = await tiempoResponse.json();
+            document.getElementById('tiempoPromedio').textContent =
+                `Tiempo promedio: ${tiempoPromedio.promedio_horas.toFixed(2)} horas`;
+        });
+    </script>
+</body>
+</html>

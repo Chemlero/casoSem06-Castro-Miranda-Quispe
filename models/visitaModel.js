@@ -30,3 +30,25 @@ module.exports = {
         return rows;
     }
 };
+// Agregar al final de visitaModel.js
+module.exports.getVisitasPorDespacho = async () => {
+    const [rows] = await pool.query(`
+        SELECT
+            d.nombre_despacho,
+            COUNT(v.id_visita) AS total_visitas
+        FROM visita v
+        JOIN despacho d ON v.id_despacho = d.id_despacho
+        GROUP BY d.nombre_despacho
+    `);
+    return rows;
+};
+
+module.exports.getTiempoPromedio = async () => {
+    const [rows] = await pool.query(`
+        SELECT
+            AVG(TIME_TO_SEC(tiempo_permanencia)) / 3600 AS promedio_horas
+        FROM visita
+        WHERE hora_salida IS NOT NULL
+    `);
+    return rows;
+};
