@@ -1,0 +1,186 @@
+/* RESET BÁSICO */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background: #f4f6f9;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #1f2d3d;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar h2 {
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+    background: #16222f;
+    font-size: 18px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #2c3e50;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 15px;
+    color: #ccc;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar a.active {
+    background: #3498db;
+    color: white;
+}
+
+/* ================= CONTENIDO ================= */
+.main {
+    margin-left: 220px;
+    padding: 25px;
+    width: 100%;
+}
+
+/* TITULOS */
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+/* ================= FORMULARIOS ================= */
+form {
+    max-width: 500px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+input, select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* BOTONES */
+button {
+    padding: 10px;
+    background: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+/* BOTONES EN GRUPO (REPORTES) */
+button + button {
+    margin-left: 10px;
+}
+
+/* ================= TABLAS ================= */
+table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+th {
+    background: #3498db;
+    color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* ================= FILTROS ================= */
+input[type="date"],
+input[type="text"] {
+    max-width: 300px;
+}
+
+/* ================= REPORTES ================= */
+#reporteDia,
+#reporteDespacho,
+#tiempoPromedio {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ================= RESPONSIVE (BONUS) ================= */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+    }
+
+    .main {
+        margin-left: 180px;
+    }
+
+    form {
+        max-width: 100%;
+    }
+}
+
+/* LOGIN */
+
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #1f2d3d;
+}
+
+.login-container {
+    background: white;
+    padding: 30px;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reportes</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<div id="sidebar"></div>
+
+<div class="main">
+    <h2>Reportes</h2>
+
+    <h3>Exportación</h3>
+    <button>Exportar a Excel</button>
+    <button>Exportar a CSV</button>
+
+    <h3>Visitas por día</h3>
+    <input type="date">
+    <button>Generar</button>
+    <div id="reporteDia"></div>
+
+    <h3>Visitas por despacho</h3>
+    <input type="text" placeholder="Nombre despacho">
+    <button>Generar</button>
+    <div id="reporteDespacho"></div>
+
+    <h3>Tiempo promedio de permanencia</h3>
+    <div id="tiempoPromedio"></div>
+</div>
+
+<script src="/js/sidebar.js"></script>
+</body>
+</html>

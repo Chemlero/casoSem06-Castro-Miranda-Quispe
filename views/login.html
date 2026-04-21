@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="login-body">
+
+<div class="login-container">
+    <h2>Iniciar Sesión</h2>
+
+    <form id="formLogin">
+        <label>Usuario</label>
+        <input type="text" id="usuario" required>
+
+        <label>Contraseña</label>
+        <input type="password" id="password" required>
+
+        <button type="submit">Ingresar</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("formLogin").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    const user = document.getElementById("usuario").value;
+    const pass = document.getElementById("password").value;
+
+    if(user.trim() !== "" && pass.trim() !== ""){
+        // 🔥 AGREGA ?auth=ok
+        window.location.href = "/registro?auth=ok";
+    } else {
+        alert("Ingrese datos válidos");
+    }
+});
+</script>
+
+</body>
+</html>

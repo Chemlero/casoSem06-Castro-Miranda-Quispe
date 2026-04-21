@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Visita</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<div id="sidebar"></div>
+
+<div class="main">
+    <h2>Registro de Visita</h2>
+
+    <form id="formRegistro">
+
+        <label>Nombre completo</label>
+        <input type="text" name="nombre" required>
+
+        <label>DNI</label>
+        <input type="text" name="dni" required>
+
+        <label>Tipo</label>
+        <select name="tipo">
+            <option value="visitante">Visitante</option>
+            <option value="funcionario">Funcionario</option>
+        </select>
+
+        <label>Despacho</label>
+        <select name="despacho">
+            <option value="">Seleccionar despacho</option>
+        </select>
+
+        <label>Persona visitada</label>
+        <input type="text" name="persona_visitada" required>
+
+        <label>Fecha</label>
+        <input type="date" name="fecha" required>
+
+        <label>Hora de entrada</label>
+        <input type="time" name="hora_entrada" required>
+
+        <label>Hora de salida</label>
+        <input type="time" name="hora_salida">
+
+        <button type="submit">Registrar Visita</button>
+    </form>
+</div>
+
+<script src="/js/sidebar.js"></script>
+</body>
+</html>

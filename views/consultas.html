@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultas</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<div id="sidebar"></div>
+
+<div class="main">
+    <h2>Consultas de Visitas</h2>
+
+    <h3>Filtros</h3>
+
+    <label>Fecha</label>
+    <input type="date" id="filtroFecha">
+
+    <label>Visitante</label>
+    <input type="text" id="filtroVisitante">
+
+    <label>Despacho</label>
+    <input type="text" id="filtroDespacho">
+
+    <button>Buscar</button>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Visitante</th>
+                <th>DNI</th>
+                <th>Despacho</th>
+                <th>Visitado</th>
+                <th>Fecha</th>
+                <th>Entrada</th>
+                <th>Salida</th>
+                <th>Tiempo</th>
+            </tr>
+        </thead>
+        <tbody id="tablaResultados">
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/sidebar.js"></script>
+</body>
+</html>
