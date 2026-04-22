@@ -89,26 +89,64 @@ input, select {
     border-radius: 5px;
 }
 
-/* BOTONES */
-button {
-    padding: 10px;
+/* ================= BOTONES ================= */
+/* Estilo unificado para <button> y enlaces con clase .button */
+button, 
+.button {
+    display: inline-block;
+    padding: 10px 20px;
     background: #3498db;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     margin-top: 10px;
-    transition: 0.3s;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none; /* Quita el subrayado en los enlaces <a> */
+    text-align: center;
+    transition: background 0.3s, transform 0.1s, box-shadow 0.3s;
+    font-family: Arial, sans-serif;
 }
 
-button:hover {
+/* Efecto al pasar el mouse */
+button:hover, 
+.button:hover {
     background: #2980b9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* BOTONES EN GRUPO (REPORTES) */
-button + button {
+/* Efecto de pulsación */
+button:active, 
+.button:active {
+    transform: translateY(1px);
+    background: #2471a3;
+}
+
+/* Espaciado entre botones cuando están juntos */
+button + button, 
+button + .button, 
+.button + button, 
+.button + .button {
     margin-left: 10px;
 }
+
+/* Variantes de color opcionales para Exportación */
+.button[href*="excel"] {
+    background: #27ae60; /* Verde para Excel */
+}
+.button[href*="excel"]:hover {
+    background: #219150;
+}
+
+.button[href*="csv"] {
+    background: #7f8c8d; /* Gris para CSV */
+}
+.button[href*="csv"]:hover {
+    background: #707b7c;
+}
+
+
 
 /* ================= TABLAS ================= */
 table {
